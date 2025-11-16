@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organic Chemistry Quiz - Dr. Enayat's Course</title>
+    <meta name="description" content="Master organic chemistry with interactive quizzes and flashcards covering carboxylic acids, aromatic compounds, and more">
+     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: 'hsl(165, 70%, 45%)',
+                            foreground: 'hsl(0, 0%, 100%)',
+                        },
+                        secondary: {
+                            DEFAULT: 'hsl(170, 40%, 92%)',
+                            foreground: 'hsl(160, 30%, 20%)',
+                        },
+                        accent: {
+                            DEFAULT: 'hsl(180, 65%, 55%)',
+                            foreground: 'hsl(0, 0%, 100%)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, hsl(165, 70%, 45%), hsl(180, 65%, 55%));
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 min-h-screen">
+    <header class="bg-white/80 backdrop-blur-sm border-b border-gray-300 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+                <div class="p-2 rounded-xl gradient-primary shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800" id="headerTitle">Organic Chemistry Quiz</h1>
+                    <p class="text-xs text-gray-600">Dr. Enayat's Course</p>
+                </div>
+            </div>
+            <button onclick="toggleLanguage()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+                <span id="langBtn">عربي</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <div id="homeScreen" class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl gradient-primary mb-6 shadow-lg">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4" id="homeTitle">Master Organic Chemistry</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto" id="homeSubtitle">Study carboxylic acids, aromatic compounds, and more with interactive quizzes and flashcards</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="startQuiz()">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-4 rounded-2xl bg-primary/10 mb-4 group-hover:bg-primary/20 transition-colors">
+                            <svg class="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3" id="quizCardTitle">Take Quiz</h3>
+                        <p class="text-gray-600 mb-4" id="quizCardDesc">Test your knowledge with 25 questions covering all topics</p>
+                        <button class="w-full gradient-primary text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg" id="startQuizBtn">Start Quiz</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="startFlashcards()">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-4 rounded-2xl bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
+                            <svg class="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3" id="flashcardTitle">Flashcards</h3>
+                        <p class="text-gray-600 mb-4" id="flashcardDesc">Review key concepts and definitions at your own pace</p>
+                        <button class="w-full border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors" id="studyNowBtn">Study Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 rounded-2xl bg-white/50 border border-gray-200">
+                <h4 class="text-lg font-bold text-gray-800 mb-3 text-center" id="topicsTitle">Topics Covered</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center" id="topicsList">
+                    <div class="p-3 rounded-lg bg-white text-sm font-medium text-gray-700">Carboxylic Acids</div>
+                    <div class="p-3 rounded-lg bg-white text-sm font-medium text-gray-700">Aromatic Compounds</div>
+                    <div class="p-3 rounded-lg bg-white text-sm font-medium text-gray-700">Aliphatic Compounds</div>
+                    <div class="p-3 rounded-lg bg-white text-sm font-medium text-gray-700">Reactions</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quizScreen" class="hidden max-w-3xl mx-auto"></div>
+        <div id="flashcardScreen" class="hidden max-w-2xl mx-auto"></div>
+        <div id="resultsScreen" class="hidden max-w-2xl mx-auto"></div>
+    </main>
+
+    <footer class="border-t border-gray-200 mt-16 py-6 bg-white/30">
+        <div class="container mx-auto px-4 text-center text-sm text-gray-600">
+            <p id="footerText">Based on Dr. Enayat's Organic Chemistry Lectures • Study Smart, Succeed!</p>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
